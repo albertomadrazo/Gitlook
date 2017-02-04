@@ -5,8 +5,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class Repositorio {
     Integer id;
-    @SerializedName("name")
+    @SerializedName("nombre")
     String nombre;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
     String descripcion;
     String issues;
     String contributors;

@@ -2,6 +2,7 @@ package com.albertomadrazo.android.gitlook.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,12 +13,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.albertomadrazo.android.gitlook.API.RepositoriosAPI;
 import com.albertomadrazo.android.gitlook.R;
+import com.albertomadrazo.android.gitlook.activity.RepoDetalleActivity;
+import com.albertomadrazo.android.gitlook.adapter.Adaptador;
 import com.albertomadrazo.android.gitlook.model.ListaRepositorios;
 import com.albertomadrazo.android.gitlook.model.Repositorio;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 
 public class RepositoriosListaFragment extends Fragment implements ListView.OnItemClickListener{
@@ -47,32 +57,71 @@ public class RepositoriosListaFragment extends Fragment implements ListView.OnIt
 
         mListView = (ListView) view.findViewById(R.id.listViewLenguajes);
 
-        setRepositorios(lenguaje);
+        Log.i("jidsj", "jifjf");
+        //setRepositorios(lenguaje);
+        getRepositoriosFromAPI("python");
 
         mListView.setOnItemClickListener(this);
 
         return view;
     }
 
-    private void setRepositorios(String lenguaje){
-        ListaRepositorios listaRepositorios = ListaRepositorios.getInstance();
-        listaRepositorios.getRepositoriosFromAPI(lenguaje);
-        mListaRepositorios = listaRepositorios.getRepositorios();
-        mostrarLista();
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
     }
 
-    private void mostrarLista(){
-        String[] items = new String[mListaRepositorios.size()];
 
-        for(int i = 0; i < mListaRepositorios.size(); i++){
-            Log.i("RepositoriosListaFrank", items[i]);
-            items[i] = mListaRepositorios.get(i).getNombre();
-        }
-        Toast.makeText(getActivity(), mListaRepositorios.toString(), Toast.LENGTH_LONG).show();
+    public void getRepositoriosFromAPI(String lenguaje){
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("http://granfonda.com/").build();
+        RepositoriosAPI api = adapter.create(RepositoriosAPI.class);
+        api.getRepositorios(lenguaje, new Callback<List<Repositorio>>(){
+
+            @Override
+            public void success(List<Repositorio> repositorios, Response response) {
+                //setListaRepositorios(repositorios);
+                mListaRepositorios = repositorios;
+                // setRepositorios(repositorios);
+                for(Repositorio repo : repositorios){
+                    //Toast.makeText(getActivity(), repo.getNombre().toString(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), repo.getNombre().toString(), Toast.LENGTH_LONG).show();
+
+                    Log.i("success>>>>>>>", repo.getNombre());
+
+                    mostrarLista();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.i("xxxxxxxxxxxxxx", "vete a la verga");
+            }
+        });
+
+
+    }
+
+
+
+
+
+/*
+    private void setRepositorios(String lenguaje){
+        getRepositoriosFromAPI(lenguaje);
+        //Toast.makeText(getActivity(), getListaRepositorios().size(), Toast.LENGTH_LONG).show();
+        mostrarLista();
+    }
+*/
+
+    private void mostrarLista(){
+        Adaptador adaptador = new Adaptador(getActivity().getApplicationContext(), (ArrayList<Repositorio>) mListaRepositorios);
+        mListView.setAdapter(adaptador);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getActivity(), "verga", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getActivity().getApplicationContext(), RepoDetalleActivity.class);
+        startActivity(intent);
     }
 }
