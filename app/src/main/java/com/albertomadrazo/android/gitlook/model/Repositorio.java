@@ -1,8 +1,11 @@
 package com.albertomadrazo.android.gitlook.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class Repositorio {
     Integer id;
+    @SerializedName("name")
     String nombre;
     String descripcion;
     String issues;

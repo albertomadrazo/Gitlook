@@ -4,6 +4,7 @@ package com.albertomadrazo.android.gitlook.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,10 @@ public class RepositoriosListaFragment extends Fragment implements ListView.OnIt
         String[] items = new String[mListaRepositorios.size()];
 
         for(int i = 0; i < mListaRepositorios.size(); i++){
+            Log.i("RepositoriosListaFrank", items[i]);
             items[i] = mListaRepositorios.get(i).getNombre();
         }
+        Toast.makeText(getActivity(), mListaRepositorios.toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override

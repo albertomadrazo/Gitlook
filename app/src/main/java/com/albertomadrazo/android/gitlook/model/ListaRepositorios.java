@@ -52,9 +52,8 @@ public class ListaRepositorios {
     }
 
 
-
     public void getRepositoriosFromAPI(String lenguaje){
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://api.github.com/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://granfonda.com/").addConverterFactory(GsonConverterFactory.create()).build();
         RepositoriosAPI api = retrofit.create(RepositoriosAPI.class);
         Call<List<Repositorio>> call = api.getRepositorios(lenguaje);
         call.enqueue(new Callback<List<Repositorio>>() {
