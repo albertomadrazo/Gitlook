@@ -14,7 +14,7 @@ public interface RepositoriosAPI {
 
     // GET repositorios por lenguaje
     @GET("search/repositories")
-    Call<List<Repositorio>> getRepositorios(@Query("q") String lenguaje, Callback<List<Repositorio>> callback);
+    Call<List<Repositorio>> getRepositorios(@Query("q") String lenguaje);
 
     // GET repositorios
 }
