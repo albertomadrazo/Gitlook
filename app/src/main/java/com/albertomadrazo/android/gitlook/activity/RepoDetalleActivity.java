@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.albertomadrazo.android.gitlook.API.RepositoriosAPI;
 import com.albertomadrazo.android.gitlook.R;
 import com.albertomadrazo.android.gitlook.model.Contributor;
+import com.albertomadrazo.android.gitlook.model.Issue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class RepoDetalleActivity extends AppCompatActivity{
 
 
     private LinearLayout parentContributors;
+    private LinearLayout parentIssues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -49,13 +51,14 @@ public class RepoDetalleActivity extends AppCompatActivity{
 
 
         parentContributors = (LinearLayout) findViewById(R.id.parent_layout_contributors);
+        parentIssues = (LinearLayout) findViewById(R.id.parent_layout_issues);
 
         getContributorsFromAPI(repoOwner, repoName);
+        getIssuesFromAPI(repoOwner, repoName);
     }
 
-    void getContributorsFromAPI(String repoOwner, String nombreRepo){
-        Toast.makeText(RepoDetalleActivity.this, nombreRepo, Toast.LENGTH_LONG).show();
 
+    void getContributorsFromAPI(String repoOwner, String nombreRepo){
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint("https://api.github.com").build();
         RepositoriosAPI api = adapter.create(RepositoriosAPI.class);
         api.getContributors(repoOwner, nombreRepo, new Callback<List<Contributor>>() {
@@ -104,4 +107,67 @@ public class RepoDetalleActivity extends AppCompatActivity{
         });
     }
 
+
+    void getIssuesFromAPI(String repoOwner, String nombreRepo){
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint("https://api.github.com").build();
+        RepositoriosAPI api = adapter.create(RepositoriosAPI.class);
+        api.getIssues(repoOwner, nombreRepo, new Callback<List<Issue>>() {
+            @Override
+            public void success(List<Issue> issues, Response response) {
+                int arraySize = (issues.size() >= 3) ? 3 : issues.size();
+
+                List<LinearLayout> issuesLayouts = new ArrayList<LinearLayout>(arraySize);
+                List<LinearLayout> issueBodyLayouts = new ArrayList<LinearLayout>(arraySize);
+
+                List<TextView> issueUser = new ArrayList<TextView>(arraySize);
+                List<TextView> issueCreated = new ArrayList<TextView>(arraySize);
+
+                for(int i = 0; i < arraySize; i++){
+                    LinearLayout layout = new LinearLayout(getBaseContext());
+                    layout.setOrientation(LinearLayout.HORIZONTAL);
+                    layout.setWeightSum(10f);
+
+                    TextView textViewUser = new TextView(getBaseContext());
+                    textViewUser.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 5f));
+                    textViewUser.setText(issues.get(i).getUser().getLogin());
+                    textViewUser.setTextColor(Color.BLACK);
+
+                    TextView textViewCreated = new TextView(getBaseContext());
+                    textViewCreated.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 5f));
+                    textViewCreated.setText(issues.get(i).getCreatedAt());
+                    textViewCreated.setTextColor(Color.BLACK);
+
+                    // Agrega los TextViews al LinearLayout
+                    layout.addView(textViewUser);
+                    layout.addView(textViewCreated);
+                    //bodyLayout.setPadding(0,0,0,20);
+
+                    LinearLayout bodyLayout = new LinearLayout(getBaseContext());
+
+                    TextView textViewBody = new TextView(getBaseContext());
+                    textViewBody.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3f));
+                    textViewBody.setText(issues.get(i).getBody());
+                    textViewBody.setTextColor(Color.rgb(66, 66, 66));
+
+                    bodyLayout.addView(textViewBody);
+
+                    // Agrega los elementos a su array
+                    issueUser.add(textViewUser);
+                    issueCreated.add(textViewCreated);
+                    issuesLayouts.add(layout);
+                    issueBodyLayouts.add(bodyLayout);
+
+                    // Agrega el LinearLayout al parent
+                    parentIssues.addView(layout);
+                    parentIssues.addView(bodyLayout);
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Toast.makeText(RepoDetalleActivity.this, error.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

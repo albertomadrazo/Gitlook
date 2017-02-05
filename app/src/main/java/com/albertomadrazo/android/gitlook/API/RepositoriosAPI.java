@@ -2,6 +2,7 @@ package com.albertomadrazo.android.gitlook.API;
 
 
 import com.albertomadrazo.android.gitlook.model.Contributor;
+import com.albertomadrazo.android.gitlook.model.Issue;
 import com.albertomadrazo.android.gitlook.model.Lenguaje;
 import com.albertomadrazo.android.gitlook.model.Repositorio;
 
@@ -27,5 +28,12 @@ public interface RepositoriosAPI {
             @Path("owner") String owner,
             @Path("repoName") String repoName,
             Callback<List<Contributor>> callback
+    );
+
+    @GET("/repos/{owner}/{repoName}/issues")
+    void getIssues(
+            @Path("owner") String owner,
+            @Path("repoName") String repoName,
+            Callback<List<Issue>> callback
     );
 }
