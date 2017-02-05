@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 buscarRepos();
             }
         });
-        btn_searchLang.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        et_lenguaje.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if((keyEvent != null && keyEvent.getKeyCode() == keyEvent.KEYCODE_ENTER) || (i == EditorInfo.IME_ACTION_DONE)){
