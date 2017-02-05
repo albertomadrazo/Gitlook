@@ -1,10 +1,15 @@
 package com.albertomadrazo.android.gitlook.activity;
 
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -65,7 +70,7 @@ public class RepoDetalleActivity extends AppCompatActivity{
         RepositoriosAPI api = adapter.create(RepositoriosAPI.class);
         api.getContributors(repoOwner, nombreRepo, new Callback<List<Contributor>>() {
             @Override
-            public void success(List<Contributor> contributors, Response response) {
+            public void success(final List<Contributor> contributors, Response response) {
                 int arraySize = (contributors.size() >= 3) ? 3 : contributors.size();
                 List<LinearLayout> contribLayouts = new ArrayList<LinearLayout>(arraySize);
                 List<TextView> contribName = new ArrayList<TextView>(arraySize);
@@ -76,7 +81,7 @@ public class RepoDetalleActivity extends AppCompatActivity{
                     layout.setOrientation(LinearLayout.HORIZONTAL);
                     layout.setWeightSum(10f);
 
-                    TextView textViewContrib = new TextView(getBaseContext());
+                    final TextView textViewContrib = new TextView(getBaseContext());
                     textViewContrib.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 7f));
                     textViewContrib.setText(contributors.get(i).getLogin());
                     textViewContrib.setTextColor(Color.BLACK);
@@ -84,10 +89,50 @@ public class RepoDetalleActivity extends AppCompatActivity{
 
                     final String shas = contributors.get(i).getContributions();
 
+                    final int k = i;
                     textViewContrib.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(RepoDetalleActivity.this, shas, Toast.LENGTH_LONG).show();
+                            final Dialog dialog = new Dialog(RepoDetalleActivity.this);
+                            dialog.setContentView(R.layout.custom_dialog);
+                            dialog.setTitle("Detalles del usuario");
+
+
+
+                            // Hace el dialogo a un tamaño que llena la pantalla
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.copyFrom(dialog.getWindow().getAttributes());
+                            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                            lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+                            dialog.show();
+                            dialog.getWindow().setAttributes(lp);
+
+
+
+
+                            ImageView avatar = (ImageView) dialog.findViewById(R.id.user_picture);
+                            // avatar.setImageBitmap();
+
+                            TextView usuario = (TextView) dialog.findViewById(R.id.user_name);
+                            usuario.setText(contributors.get(k).getLogin());
+
+                            TextView contribs = (TextView) dialog.findViewById(R.id.user_contributions);
+                            contribs.setText(contributors.get(k).getContributions());
+
+                            TextView url = (TextView) dialog.findViewById(R.id.user_url);
+                            url.setText(contributors.get(k).getUrl());
+
+                            // contributors.get(k).getAvatarUrl();
+
+                            Button dialogOk = (Button) dialog.findViewById(R.id.dialogOK);
+                            dialogOk.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            dialog.show();
                         }
                     });
 
