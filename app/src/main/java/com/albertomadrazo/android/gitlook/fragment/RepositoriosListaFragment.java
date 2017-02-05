@@ -105,7 +105,7 @@ public class RepositoriosListaFragment extends Fragment implements ListView.OnIt
 
 
     private void mostrarLista(){
-        Adaptador adaptador = new Adaptador(getActivity().getApplicationContext(), (ArrayList<Repositorio>) mListaRepositorios);
+        Adaptador adaptador = new Adaptador(getContext(), (ArrayList<Repositorio>) mListaRepositorios);
         mListView.setAdapter(adaptador);
     }
 
