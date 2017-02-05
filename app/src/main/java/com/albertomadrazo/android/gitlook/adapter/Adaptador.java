@@ -43,8 +43,11 @@ public class Adaptador extends BaseAdapter{
         View vista = inflater.inflate(R.layout.lista_item_repositorio, viewGroup, false);
 
         Repositorio repo = mRepositorios.get(i);
-        TextView tv_nombreRepositorio = (TextView) vista.findViewById(R.id.nombre_repo);
-        tv_nombreRepositorio.setText(repo.getNombre());
+        TextView tvNombreRepositorio = (TextView) vista.findViewById(R.id.nombre_repo);
+        tvNombreRepositorio.setText(repo.getNombre());
+
+        TextView tvRepoStars = (TextView) vista.findViewById(R.id.repo_stars);
+        tvRepoStars.setText(Integer.toString(repo.getWatchers()));
 
         TextView tv_descripcionRepositorio = (TextView) vista.findViewById(R.id.descripcion_repo);
         tv_descripcionRepositorio.setText(repo.getDescripcion());

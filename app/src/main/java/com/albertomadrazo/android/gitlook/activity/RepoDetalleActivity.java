@@ -4,6 +4,7 @@ package com.albertomadrazo.android.gitlook.activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -78,6 +79,16 @@ public class RepoDetalleActivity extends AppCompatActivity{
                     textViewContrib.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 7f));
                     textViewContrib.setText(contributors.get(i).getLogin());
                     textViewContrib.setTextColor(Color.BLACK);
+                    textViewContrib.setTextSize(18);
+
+                    final String shas = contributors.get(i).getContributions();
+
+                    textViewContrib.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(RepoDetalleActivity.this, shas, Toast.LENGTH_LONG).show();
+                        }
+                    });
 
                     TextView textViewCont = new TextView(getBaseContext());
                     textViewCont.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3f));
@@ -131,11 +142,13 @@ public class RepoDetalleActivity extends AppCompatActivity{
                     textViewUser.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 5f));
                     textViewUser.setText(issues.get(i).getUser().getLogin());
                     textViewUser.setTextColor(Color.BLACK);
+                    textViewUser.setTextSize(18);
 
                     TextView textViewCreated = new TextView(getBaseContext());
                     textViewCreated.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 5f));
                     textViewCreated.setText(issues.get(i).getCreatedAt());
                     textViewCreated.setTextColor(Color.BLACK);
+                    textViewUser.setTextSize(18);
 
                     // Agrega los TextViews al LinearLayout
                     layout.addView(textViewUser);
@@ -146,10 +159,15 @@ public class RepoDetalleActivity extends AppCompatActivity{
 
                     TextView textViewBody = new TextView(getBaseContext());
                     textViewBody.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 3f));
-                    textViewBody.setText(issues.get(i).getBody());
+                    textViewBody.setText((issues.get(i).getBody().isEmpty()) ? "Sin comentarios" : issues.get(i).getBody());
                     textViewBody.setTextColor(Color.rgb(66, 66, 66));
 
+                    // Parametros para los LinearLayouts
+                    LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    linearParams.setMargins(0,0,0,30);
+
                     bodyLayout.addView(textViewBody);
+                    bodyLayout.setLayoutParams(linearParams);
 
                     // Agrega los elementos a su array
                     issueUser.add(textViewUser);

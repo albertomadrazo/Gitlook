@@ -21,6 +21,11 @@ public class Repositorio {
 
     String contributors;
 
+
+
+    @SerializedName("watchers")
+    Integer watchers;
+
     public String getNombreCompleto() {
         return nombreCompleto;
     }
@@ -31,6 +36,10 @@ public class Repositorio {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public Integer getWatchers() {
+        return watchers;
     }
 
     public Integer getId() {
