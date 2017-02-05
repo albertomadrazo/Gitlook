@@ -4,10 +4,8 @@ package com.albertomadrazo.android.gitlook.API;
 import com.albertomadrazo.android.gitlook.model.Contributor;
 import com.albertomadrazo.android.gitlook.model.Issue;
 import com.albertomadrazo.android.gitlook.model.Lenguaje;
-import com.albertomadrazo.android.gitlook.model.Repositorio;
 
 import java.util.List;
-
 
 import retrofit.Callback;
 import retrofit.http.GET;

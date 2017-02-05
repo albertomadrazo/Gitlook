@@ -5,24 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.albertomadrazo.android.gitlook.API.RepositoriosAPI;
 import com.albertomadrazo.android.gitlook.R;
 import com.albertomadrazo.android.gitlook.activity.RepoDetalleActivity;
 import com.albertomadrazo.android.gitlook.adapter.Adaptador;
 import com.albertomadrazo.android.gitlook.model.Lenguaje;
-import com.albertomadrazo.android.gitlook.model.ListaRepositorios;
 import com.albertomadrazo.android.gitlook.model.Repositorio;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,20 +34,14 @@ public class RepositoriosListaFragment extends Fragment implements ListView.OnIt
 
     private ListView mListView;
 
-    public List<Repositorio> getListaRepositorios() {
-        return mListaRepositorios;
-    }
-
-    public void setListaRepositorios(List<Repositorio> listaRepositorios) {
-        mListaRepositorios = listaRepositorios;
-    }
-
     private List<Repositorio> mListaRepositorios;
+
 
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -61,14 +50,9 @@ public class RepositoriosListaFragment extends Fragment implements ListView.OnIt
             lenguaje = this.getArguments().getString("lenguaje");
         }
 
-
         View view = inflater.inflate(R.layout.fragment_lista, container, false);
 
         mListView = (ListView) view.findViewById(R.id.listViewLenguajes);
-
-
-        Log.i("jidsj", "jifjf");
-        //setRepositorios(lenguaje);
 
         if(lenguaje != null){
             getRepositoriosPorLang(lenguaje);

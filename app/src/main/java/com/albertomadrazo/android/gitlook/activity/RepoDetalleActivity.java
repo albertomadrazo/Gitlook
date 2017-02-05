@@ -4,7 +4,6 @@ package com.albertomadrazo.android.gitlook.activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,7 +34,6 @@ public class RepoDetalleActivity extends AppCompatActivity{
     private TextView tvNombreRepo;
     private TextView tvDescripcionRepo;
 
-
     private LinearLayout parentContributors;
     private LinearLayout parentIssues;
 
@@ -46,7 +44,6 @@ public class RepoDetalleActivity extends AppCompatActivity{
 
         Bundle extras = getIntent().getExtras();
         String repoName = extras.getString("repo_name");
-        String repoFullName = extras.getString("repo_full_name");
         String repoOwner = extras.getString("repo_owner");
         String repoDescripcion = extras.getString("repo_description");
 
@@ -56,7 +53,6 @@ public class RepoDetalleActivity extends AppCompatActivity{
 
         tvDescripcionRepo = (TextView) findViewById(R.id.detalle_descripcion_repo);
         tvDescripcionRepo.setText(repoDescripcion);
-
 
         parentContributors = (LinearLayout) findViewById(R.id.parent_layout_contributors);
         parentIssues = (LinearLayout) findViewById(R.id.parent_layout_issues);
@@ -88,8 +84,6 @@ public class RepoDetalleActivity extends AppCompatActivity{
                     textViewContrib.setTextColor(Color.BLACK);
                     textViewContrib.setTextSize(18);
 
-                    final String shas = contributors.get(i).getContributions();
-
                     final int k = i;
                     textViewContrib.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -108,11 +102,7 @@ public class RepoDetalleActivity extends AppCompatActivity{
                             dialog.show();
                             dialog.getWindow().setAttributes(lp);
 
-
-
-
                             ImageView avatar = (ImageView) dialog.findViewById(R.id.user_picture);
-                            // avatar.setImageBitmap();
 
                             Picasso.with(RepoDetalleActivity.this)
                                     .load(contributors.get(k).getAvatarUrl())
@@ -204,7 +194,6 @@ public class RepoDetalleActivity extends AppCompatActivity{
                     // Agrega los TextViews al LinearLayout
                     layout.addView(textViewUser);
                     layout.addView(textViewCreated);
-                    //bodyLayout.setPadding(0,0,0,20);
 
                     LinearLayout bodyLayout = new LinearLayout(getBaseContext());
 
@@ -230,7 +219,6 @@ public class RepoDetalleActivity extends AppCompatActivity{
                     parentIssues.addView(layout);
                     parentIssues.addView(bodyLayout);
                 }
-
             }
 
             @Override
