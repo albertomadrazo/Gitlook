@@ -104,50 +104,20 @@ public class RepositoriosListaFragment extends Fragment implements ListView.OnIt
     }
 
 
-    public void getRepositoriosFromAPI(String lenguaje){
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(URL).build();
-        RepositoriosAPI api = adapter.create(RepositoriosAPI.class);
-        api.getRepositorios("language:"+lenguaje, new Callback<List<Repositorio>>(){
-
-            @Override
-            public void success(List<Repositorio> repositorios, Response response) {
-                //setListaRepositorios(repositorios);
-                mListaRepositorios = repositorios;
-                // setRepositorios(repositorios);
-                for(Repositorio repo : repositorios){
-                    //Toast.makeText(getActivity(), repo.getNombre().toString(), Toast.LENGTH_LONG).show();
-                    //Toast.makeText(getActivity(), repo.getNombre().toString(), Toast.LENGTH_LONG).show();
-
-                    Log.i("success>>>>>>>", repo.getNombre());
-
-                    mostrarLista();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.i("xxxxxxxxxxxxxx", error.toString());
-            }
-        });
-    }
-
-
-/*
-    private void setRepositorios(String lenguaje){
-        getRepositoriosFromAPI(lenguaje);
-        //Toast.makeText(getActivity(), getListaRepositorios().size(), Toast.LENGTH_LONG).show();
-        mostrarLista();
-    }
-*/
-
     private void mostrarLista(){
         Adaptador adaptador = new Adaptador(getActivity().getApplicationContext(), (ArrayList<Repositorio>) mListaRepositorios);
         mListView.setAdapter(adaptador);
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Intent intent = new Intent(getActivity().getApplicationContext(), RepoDetalleActivity.class);
+        intent.putExtra("repo_name", mListaRepositorios.get(i).getNombre());
+        intent.putExtra("repo_full_name", mListaRepositorios.get(i).getNombreCompleto());
+        intent.putExtra("repo_owner", mListaRepositorios.get(i).getUser().getLogin());
+        intent.putExtra("repo_description", mListaRepositorios.get(i).getDescripcion());
+
         startActivity(intent);
     }
 }

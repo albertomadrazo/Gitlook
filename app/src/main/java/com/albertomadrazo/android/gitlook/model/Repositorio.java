@@ -8,14 +8,30 @@ public class Repositorio {
     @SerializedName("name")
     String nombre;
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+    @SerializedName("full_name")
+    String nombreCompleto;
+
+    @SerializedName("owner")
+    User user;
 
     @SerializedName("description")
     String descripcion;
+
     String issues;
+
     String contributors;
+
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
 
     public Integer getId() {
         return id;
