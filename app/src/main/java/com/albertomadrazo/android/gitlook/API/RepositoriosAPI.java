@@ -1,6 +1,7 @@
 package com.albertomadrazo.android.gitlook.API;
 
 
+import com.albertomadrazo.android.gitlook.model.Lenguaje;
 import com.albertomadrazo.android.gitlook.model.Repositorio;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import retrofit.http.Query;
 
 public interface RepositoriosAPI {
 
+    String toGet = "/q";
     // GET repositorios por lenguaje
     @GET("/jay")
     void getRepositorios(
@@ -21,4 +23,9 @@ public interface RepositoriosAPI {
     );
 
     // GET repositorios
+    @GET("/repositories")
+    void getRepositoriosPorLang(
+            @Query("q") String lenguaje,
+            Callback<Lenguaje> callback
+    );
 }

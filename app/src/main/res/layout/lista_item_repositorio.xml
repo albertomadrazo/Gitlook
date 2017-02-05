@@ -17,6 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Descripción del repositorio"
+        android:textStyle="italic"
+        android:lines="2"
+        android:ellipsize="end"
         android:textColor="#000000" />
 
 </LinearLayout>
