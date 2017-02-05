@@ -19,6 +19,7 @@ import com.albertomadrazo.android.gitlook.API.RepositoriosAPI;
 import com.albertomadrazo.android.gitlook.R;
 import com.albertomadrazo.android.gitlook.model.Contributor;
 import com.albertomadrazo.android.gitlook.model.Issue;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +114,11 @@ public class RepoDetalleActivity extends AppCompatActivity{
                             ImageView avatar = (ImageView) dialog.findViewById(R.id.user_picture);
                             // avatar.setImageBitmap();
 
+                            Picasso.with(RepoDetalleActivity.this)
+                                    .load(contributors.get(k).getAvatarUrl())
+                                    .resize(200, 200)
+                                    .into(avatar);
+
                             TextView usuario = (TextView) dialog.findViewById(R.id.user_name);
                             usuario.setText(contributors.get(k).getLogin());
 
@@ -122,7 +128,6 @@ public class RepoDetalleActivity extends AppCompatActivity{
                             TextView url = (TextView) dialog.findViewById(R.id.user_url);
                             url.setText(contributors.get(k).getUrl());
 
-                            // contributors.get(k).getAvatarUrl();
 
                             Button dialogOk = (Button) dialog.findViewById(R.id.dialogOK);
                             dialogOk.setOnClickListener(new View.OnClickListener() {
