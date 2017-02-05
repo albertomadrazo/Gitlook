@@ -46,6 +46,7 @@ public class RepoDetalleActivity extends AppCompatActivity{
 
         tvNombreRepo = (TextView) findViewById(R.id.detalle_nombre_repo);
         tvNombreRepo.setText(repoName);
+        tvNombreRepo.setTextColor(Color.parseColor("#42C0FB"));
 
         tvDescripcionRepo = (TextView) findViewById(R.id.detalle_descripcion_repo);
         tvDescripcionRepo.setText(repoDescripcion);

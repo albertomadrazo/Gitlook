@@ -9,6 +9,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import com.albertomadrazo.android.gitlook.fragment.RepositoriosListaFragment;
 public class MainActivity extends AppCompatActivity {
 
     private final String LISTA_FRAGMENT_TAG = "ListaFragment";
-    private Button btn_searchLang;
+    private ImageView btn_searchLang;
     private EditText et_lenguaje;
 
     @Override
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         et_lenguaje = (EditText) findViewById(R.id.et_buscador);
 
-        btn_searchLang = (Button) findViewById(R.id.btn_busca);
+        btn_searchLang = (ImageView) findViewById(R.id.btn_busca);
         btn_searchLang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
