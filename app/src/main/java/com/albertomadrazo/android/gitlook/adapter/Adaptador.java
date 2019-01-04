@@ -14,8 +14,8 @@ import com.albertomadrazo.android.gitlook.model.Repositorio;
 import java.util.ArrayList;
 
 public class Adaptador extends BaseAdapter{
-    ArrayList<Repositorio> mRepositorios;
-    Context mContext;
+    private ArrayList<Repositorio> mRepositorios;
+    private Context mContext;
 
     public Adaptador(Context context, ArrayList<Repositorio> repositorios){
         this.mRepositorios = repositorios;
