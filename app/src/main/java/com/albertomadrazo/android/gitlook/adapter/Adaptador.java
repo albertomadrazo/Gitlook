@@ -46,8 +46,8 @@ public class Adaptador extends BaseAdapter{
         TextView tvNombreRepositorio = (TextView) vista.findViewById(R.id.nombre_repo);
         tvNombreRepositorio.setText(repo.getNombre());
 
-        TextView tvRepoStars = (TextView) vista.findViewById(R.id.repo_stars);
-        tvRepoStars.setText(Integer.toString(repo.getWatchers()));
+        TextView tv_RepoStars = (TextView) vista.findViewById(R.id.repo_stars);
+        tv_RepoStars.setText(Integer.toString(repo.getWatchers()));
 
         TextView tv_descripcionRepositorio = (TextView) vista.findViewById(R.id.descripcion_repo);
         tv_descripcionRepositorio.setText(repo.getDescripcion());
